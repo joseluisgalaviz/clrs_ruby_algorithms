@@ -98,13 +98,27 @@ def BFS(_G,s)
     u.color='BLACK'
   end
 
-  _G.nodes.each do |u|
-    print "#{u[1].name} #{u[1].distance}\n"
-  end
+
+  #_G.nodes.each do |u|
+  #print "#{u[1].name} #{u[1].distance}\n"
+  #  end
+  return _G
 
 end
 
+def print_path(_G,s,v)
+  if(s==v)
+    print "-> #{s.name} "
+  elsif v.parent==nil
+    print "No path from #{s.name} to #{v.name} exist\n"
+  else
+    print_path(_G,s,v.parent)
+    print "-> #{v.name} "
+  end
+end
+
 s = Node.new('u')
+v=Node.new('v')
 graph = Graph.new
 graph.add_node(s)
 graph.add_node(Node.new('y'))
@@ -113,7 +127,7 @@ graph.add_node(Node.new('t'))
 graph.add_node(Node.new('w'))
 graph.add_node(Node.new('s'))
 graph.add_node(Node.new('r'))
-graph.add_node(Node.new('v'))
+graph.add_node(v)
 graph.add_edge('u', 'y')
 graph.add_edge('u', 'x')
 graph.add_edge('u', 't')
@@ -125,4 +139,7 @@ graph.add_edge('w', 's')
 graph.add_edge('s', 'r')
 graph.add_edge('r', 'v')
 
-BFS(graph,s)
+graph_s = BFS(graph,s)
+
+print_path(graph_s,s,v)
+
